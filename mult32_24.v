@@ -18,13 +18,13 @@ input clk;
 output [OPWRDLEN-1:0] res_24;
 output op_valid;
 
-reg [OPWRDLEN-1:0] res_24;
-reg [IP1WRDLEN+IP2WRDLEN-1:0] res_t;
+//wire [OPWRDLEN-1:0] res_24;
+wire [IP1WRDLEN+IP2WRDLEN-1:0] res_t;
 
-always@(posedge clk) begin
-res_t = op1_16*op2_32;
-res_24 = res_t[47:24];
-// code goes here
-end
+// making use of leading 1 i.e ignoring 1.xxxxxx
+assign res_t = op1_16*op2_32;
+assign res_24 = res_t[45:22];
+assign op_valid = 1;
+//$display("res_t %b res_24 %b ",res_t,res_24);
 
 endmodule
